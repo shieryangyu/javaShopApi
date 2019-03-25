@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.httpapi.demo.dao.OrderDao">
+
+    <update id="setMoney">
+        update shop_user set user_money = #{balance} where id=#{userId};
+    </update>
+
+    <insert id="addOrder" parameterType="hashmap">
+        insert into shop_order (commodity_id,order_size,order_total,user_id,order_number) value
+        <foreach collection="orderList" item="order" separator="," close=";">
+            (#{order.sid},#{order.size},#{order.total},#{order.uid},#{number})
+        </foreach>
+    </insert>
+
+    <delete id="deleteCartByUid" parameterType="int">
+        delete from shop_cart where user_id=#{userId}
+    </delete>
+
+    <select id="checkOrder" resultType="hashmap">
+        select * from shop_order where user_id=#{userid} and order_status=#{status}
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.httpapi.demo.dao.CartDao">
+   <insert id="addCart" parameterType="int">
+       insert into shop_cart (commodity_id,user_id) value(#{shopid},#{userid})
+   </insert>
+
+    <select id="selectCart" parameterType="int" resultType="hashmap">
+        select b.*,a.cart_nums,a.id as cid from shop_cart a INNER JOIN shop_commodity b on a.commodity_id=b.id and a.user_id=#{userid}
+    </select>
+
+    <select id="checkCart" resultType="hashmap" parameterType="int">
+        select * from shop_cart where commodity_id=#{shopid} and user_id=#{userid}
+    </select>
+
+    <delete id="deleteCart">
+        delete from shop_cart where id=#{cid}
+    </delete>
+</mapper>

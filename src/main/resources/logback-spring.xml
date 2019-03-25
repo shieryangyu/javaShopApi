@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <!-- 1. FILE 错误日志输出到文件。
+    2. CONSOLE 表示输出到控制台，需要使用类： ch.qos.logback.core.ConsoleAppender-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文档的路径及文档名 -->
+        <File>${LOG_PATH}${LOG_FILE}</File>
+        <!--日志文档输出格式-->
+        <encoder>
+            <pattern>%date [%level] [%thread] %logger{60} [%file : %line] %msg%n</pattern>
+        </encoder>
+        <!-- 日志记录器的滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}daily/${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>180</maxHistory> <!-- 保留180天 -->
+        </rollingPolicy>
+    </appender>
+
+    <!--mybatis sql日志 日志的级别需要是DEBUG
+    日志打印的包的范围，及分类日志文件存储
+    注意name，绑定你自己的dao层-->
+    <logger name="com.httpapi.bmy.dao" level="DEBUG" additivity="false"></logger>
+
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

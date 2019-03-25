@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.httpapi.demo.dao.CommodityDao">
+    <select id="getAllCommodity" resultType="com.httpapi.demo.bean.Commodity">
+      select * from shop_commodity limit #{page},20;
+   </select>
+
+    <select id="getCommodityById" resultType="com.httpapi.demo.bean.Commodity">
+        select * from shop_commodity where id=#{id}
+    </select>
+
+    <select id="getCommodityByBrand" resultType="com.httpapi.demo.bean.Commodity">
+        select * from shop_commodity where commodity_brand=#{brand}
+    </select>
+</mapper>
